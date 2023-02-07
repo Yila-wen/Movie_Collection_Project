@@ -170,11 +170,41 @@ public class MovieCollection
         searchTerm = searchTerm.substring(0,1).toUpperCase() + searchTerm.substring(1).toLowerCase();
 
         ArrayList<Movie> results = new ArrayList<Movie>();
+        ArrayList<String> castMembers = new ArrayList<String>();
 
         for (int i = 0; i < movies.size(); i++) {
             String movieCast = movies.get(i).getCast();
+            String[] cast = movieCast.split("\\|");
+            for(int a = 0; a< cast.length;a++){
+                if (cast[a].contains(searchTerm)){
+                    if(castMembers.size() == 0){
+                        castMembers.add(cast[a]);
+                    }
+                    else{
+                    for (int b = 0; b < castMembers.size();b++){
+                        int count = 0;
+                        if (castMembers.get(b).equals(cast[a])){
+                            count++;
+                        }
+                        if (b == castMembers.size()-1 && count == 0){
+                            castMembers.add(cast[a]);
+                        }
+                    }
+                    }
 
+                }
+            }
     }
+        for (int i = 1;i<=castMembers.size();i++){
+            System.out.println(i + ". " + castMembers.get(i-1));
+        }
+        System.out.println("Which cast member would you like to learn more about?");
+        System.out.print("Enter number: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        // FINISH
+
     }
 
     private void searchKeywords() {
