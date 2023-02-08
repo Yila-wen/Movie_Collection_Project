@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class MovieCollection
@@ -181,8 +182,8 @@ public class MovieCollection
                         castMembers.add(cast[a]);
                     }
                     else{
-                    for (int b = 0; b < castMembers.size();b++){
                         int count = 0;
+                    for (int b = 0; b < castMembers.size();b++){
                         if (castMembers.get(b).equals(cast[a])){
                             count++;
                         }
@@ -195,6 +196,7 @@ public class MovieCollection
                 }
             }
     }
+        Collections.sort(castMembers);
         for (int i = 1;i<=castMembers.size();i++){
             System.out.println(i + ". " + castMembers.get(i-1));
         }
@@ -202,8 +204,44 @@ public class MovieCollection
         System.out.print("Enter number: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
+        searchTerm = castMembers.get(choice-1);
 
-        // FINISH
+        for (int i = 0; i < movies.size(); i++) {
+            String movieCast = movies.get(i).getCast();
+            String[] cast = movieCast.split("\\|");
+            for(int a = 0; a< cast.length;a++){
+                if (cast[a].equals(searchTerm)){
+                    results.add(movies.get(i));
+                    }
+            }
+        }
+
+        // sort the results by title
+        sortResults(results);
+
+        // now, display them all to the user
+        for (int i = 0; i < results.size(); i++)
+        {
+            String title = results.get(i).getTitle();
+
+            // this will print index 0 as choice 1 in the results list; better for user!
+            int choiceNum = i + 1;
+
+            System.out.println("" + choiceNum + ". " + title);
+        }
+
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.print("Enter number: ");
+
+        int ans = scanner.nextInt();
+        scanner.nextLine();
+
+        Movie selectedMovie = results.get(ans - 1);
+
+        displayMovieInfo(selectedMovie);
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
 
     }
 
@@ -258,6 +296,7 @@ public class MovieCollection
 
     private void listGenres()
     {
+
 
     }
 
